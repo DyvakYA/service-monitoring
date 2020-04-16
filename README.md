@@ -1,8 +1,8 @@
 ## Description 
 
-I needed special tool for service monitoring strictly from linux terminal
-Did not find any appropriate tool, and developed by myself
-Look at picture
+I needed special tool for service monitoring strictly from linux terminal.  
+Did not find any appropriate tool, and developed by myself.  
+Look at picture.  
 ![TUI](screenshot1.png)
 
 ## Type of change:  
