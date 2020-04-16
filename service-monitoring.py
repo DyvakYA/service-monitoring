@@ -4,6 +4,7 @@ import logging
 import sys
 import threading
 import os
+from datetime import datetime
 
 class bcolors:
     HEADER = '\033[95m'
@@ -37,9 +38,11 @@ def proccess():
 		clean = '\033[F\r'
 		for i in range(1, len(urls)):
 			clean += '\033[F\r\033[F\r'
-			sys.stdout.write(bcolors.OKBLUE + '|' + urls[i] + '\n')
 			start = time.clock()
-			request_time = 0
+
+			now = datetime.now()
+			print(bcolors.OKBLUE + '| ' + now.strftime("%m/%d/%Y, %H:%M:%S") + ' | ' + urls[i])
+
 			try:
 				response = requests.get(urls[i], timeout=10)
 				request_time = time.clock() - start
@@ -47,10 +50,13 @@ def proccess():
 				request_time = 0.1
 			except requests.exceptions.ConnectTimeout:
 				request_time = 0.1
+			except requests.exceptions.ConnectionError:
+			    request_time = 0.1
+
 			if request_time > 0.1:
 				request_time = 0.1
 			progress = int(float(request_time * 1000))
-			print('|%s%s%s%s| %d ns ' % (color(progress), '\033[7m' + ' '*progress + '\033[27m', color(progress), ' '*(100-progress), request_time * 1000000))
+			print('%s|%s%s%s| %d ns ' % (color(progress), '\033[7m' + ' '*progress + '\033[27m', color(progress), ' '*(100-progress), request_time * 1000000))
 		print(bcolors.ENDC + '|%s| \n' % ('-'*100))
 		clean += '\033[F\r\033[F\r'
 		print(clean)
